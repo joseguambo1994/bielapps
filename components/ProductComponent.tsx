@@ -3,6 +3,10 @@ import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
 import { IProduct } from '../screens/TabThreeScreen';
 import { Text, View } from './Themed';
+import { Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 export default function ProductComponent( props: IProduct) {
   return (
@@ -23,9 +27,10 @@ export default function ProductComponent( props: IProduct) {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    width: '100%',
+    height: windowHeight/4,
     backgroundColor: Colors.dark.lightRed,
-    margin:10,
+    padding:10,
     flexDirection:'row',
   },
   image:{

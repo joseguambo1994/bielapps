@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import ProductComponent from '../components/ProductComponent';
 import { Text, View } from '../components/Themed';
 import Colors from '../constants/Colors';
@@ -28,7 +28,7 @@ export default function TabThreeScreen({ navigation }: RootTabScreenProps<'TabTh
     .then((querySnapshot) => {
         let arrayOfProducts: IProduct[] = []
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
+          
             console.log(doc.id, " => ", doc.data());
             const item: IProduct = {
               name: doc.data().name,
@@ -52,6 +52,7 @@ export default function TabThreeScreen({ navigation }: RootTabScreenProps<'TabTh
 
   return (
     <View style={styles.container}>
+      <ScrollView>
       {
         products.map(
           item => <ProductComponent  
@@ -64,6 +65,7 @@ export default function TabThreeScreen({ navigation }: RootTabScreenProps<'TabTh
           />
         )
       }
+      </ScrollView>
     </View>
   );
 }
@@ -71,7 +73,10 @@ export default function TabThreeScreen({ navigation }: RootTabScreenProps<'TabTh
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     backgroundColor: Colors.dark.darkBlue,
+    justifyContent:'center'
   },
+  scrollViewContainer: {
+    flex:1
+  }
 });
