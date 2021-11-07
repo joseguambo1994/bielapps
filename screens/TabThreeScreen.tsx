@@ -7,6 +7,7 @@ import { db } from '../firebase';
 import { RootTabScreenProps } from '../types';
 
 export interface IProduct {
+  id: string,
   name: string,
   type: string,
   stock: string,
@@ -31,6 +32,7 @@ export default function TabThreeScreen({ navigation }: RootTabScreenProps<'TabTh
           
             console.log(doc.id, " => ", doc.data());
             const item: IProduct = {
+              id: doc.id,
               name: doc.data().name,
               type: doc.data().type,
               stock: doc.data().stock,
@@ -56,6 +58,8 @@ export default function TabThreeScreen({ navigation }: RootTabScreenProps<'TabTh
       {
         products.map(
           item => <ProductComponent  
+          id={item.id}
+          key={item.id}
           name={item.name}
           type={item.type}
           brand={item.brand}
