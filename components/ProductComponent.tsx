@@ -7,6 +7,9 @@ import { Dimensions } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { MotiView, MotiText } from 'moti';
 import Animated from 'react-native-reanimated';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { depositMoney, setSelectedProductId } from '../state/action-creators';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -14,6 +17,11 @@ const windowHeight = Dimensions.get('window').height;
 export default function ProductComponent( props: IProduct) {
 
   const [ isProductSelected, setIsProductSelected ] = useState(false);
+
+ // const selectedProduct = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const deposit = bindActionCreators( depositMoney, dispatch )
+  const set = bindActionCreators( setSelectedProductId , dispatch )
 
   const renderTextAndButton = () => {
     return <View style={styles.textButtonContainer}>
@@ -24,7 +32,10 @@ export default function ProductComponent( props: IProduct) {
         <Text>{props.stock}</Text>
      </View>
      <View style={styles.buttonContainer}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=> {
+        deposit(1000);
+        set(props.id)
+      }}>
         <Text>
         <FontAwesome size={30} name={'shopping-cart'} color={Colors.dark.white}/>
         </Text>
@@ -46,7 +57,9 @@ export default function ProductComponent( props: IProduct) {
          animate={{ 
           transform: [
             { scale: isProductSelected ? 1 : 1.4}, 
-            { translateX: isProductSelected ? 0: 50 }],
+            { translateX: isProductSelected ? 0: 25 },
+          
+          ],
     
          }}
         

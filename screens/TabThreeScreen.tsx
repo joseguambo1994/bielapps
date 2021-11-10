@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import ProductComponent from '../components/ProductComponent';
 import { Text, View } from '../components/Themed';
 import Colors from '../constants/Colors';
 import { db } from '../firebase';
+import { depositMoney } from '../state/action-creators';
 import { RootTabScreenProps } from '../types';
+
 
 export interface IProduct {
   id: string,
@@ -51,6 +55,8 @@ export default function TabThreeScreen({ navigation }: RootTabScreenProps<'TabTh
   }
 
   useEffect( () => getProductsFromDatabase(), [] );
+
+
 
   return (
     <View style={styles.container}>

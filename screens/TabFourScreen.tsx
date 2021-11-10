@@ -1,12 +1,78 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { Text, View } from '../components/Themed';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import ProductAnimationComponent from '../components/ProductAnimationComponent';
+import { View } from '../components/Themed';
+import Colors from '../constants/Colors';
+import { db } from '../firebase';
 import { RootTabScreenProps } from '../types';
 
+
+export interface IProduct {
+  id: string,
+  name: string,
+  type: string,
+  stock: string,
+  unitPrice: string,
+  brand: string,
+  image: string
+}
+
+const emptyArray: IProduct[] = []
+
 export default function TabFourScreen({ navigation }: RootTabScreenProps<'TabFour'>) {
+
+  const [ products, setProducts ] = useState(emptyArray);
+  
+
+  const getProductsFromDatabase = () => {
+    db.collection("products")
+    .get()
+    .then((querySnapshot) => {
+        let arrayOfProducts: IProduct[] = []
+        querySnapshot.forEach((doc) => {
+          
+            console.log(doc.id, " => ", doc.data());
+            const item: IProduct = {
+              id: doc.id,
+              name: doc.data().name,
+              type: doc.data().type,
+              stock: doc.data().stock,
+              unitPrice: doc.data().unitPrice,
+              brand: doc.data().brand,
+              image: doc.data().image
+            }
+            arrayOfProducts.push(item)
+         
+        });
+        setProducts( () => arrayOfProducts )
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+  }
+
+  useEffect( () => getProductsFromDatabase(), [] );
+
+
+
   return (
     <View style={styles.container}>
-      <Text >Tab Four</Text>
+      <ScrollView>
+      {
+        products.map(
+          item => <ProductAnimationComponent  
+          id={item.id}
+          key={item.id}
+          name={item.name}
+          type={item.type}
+          brand={item.brand}
+          image={item.image}
+          unitPrice={item.unitPrice}
+          stock={item.unitPrice}
+          />
+        )
+      }
+      </ScrollView>
     </View>
   );
 }
@@ -14,7 +80,10 @@ export default function TabFourScreen({ navigation }: RootTabScreenProps<'TabFou
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: Colors.dark.darkBlue,
+    justifyContent:'center'
   },
+  scrollViewContainer: {
+    flex:1
+  }
 });
