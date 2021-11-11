@@ -6,7 +6,6 @@ import Colors from '../constants/Colors';
 import { db } from '../firebase';
 import { RootTabScreenProps } from '../types';
 
-
 export interface IProduct {
   id: string,
   name: string,
