@@ -82,23 +82,20 @@ const renderText = () => {
              
               <MotiText style={{ 
               position:'absolute',
-              fontSize: isProductSelected ? 0 : 25,
-               justifyContent:'center', alignItems:'center',
-               color: Colors.dark.white,
-               shadowOffset: {
-                width: 2,
-                height: 2,
-              },
-              shadowOpacity: 1,
-              shadowRadius: 3.84,
-              shadowColor: Colors.dark.black                
+              fontSize: isProductSelected ? 0 : 22,
+              color: Colors.dark.white,
+              textShadowColor: Colors.dark.black,
+              textShadowOffset: {width:3,height:3},
+              textShadowRadius: 10,
+              fontWeight: 'bold',
+              shadowRadius:10,       
             }}
               animate={ {
                 transform:[
                   {
-                  translateY: isProductSelected ? 0:40
+                  translateY: isProductSelected ? 0: 50
                 },{
-                  translateX: isProductSelected ? 0: 50,
+                  translateX: isProductSelected ? 0: 40,
                 },
                 ]
               }}
